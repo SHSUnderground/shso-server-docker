@@ -11,6 +11,7 @@ services:
             - ./SHSO_sample_DB.sql:/docker-entrypoint-initdb.d/SHSO_sample_DB.sql
     shsoserver:
         container_name: shsoserver
+        image: ubuntu:latest
         user: shsoserver
         links:
             - "shsodb"
