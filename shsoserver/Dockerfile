@@ -16,11 +16,12 @@ RUN # mkdir sf-game
 RUN # mkdir sf-notification
 RUN cp -n -r SmartFoxServer_PRO_1.6.6/* /home/shsoserver/sf-game || true
 RUN cp -n -r SmartFoxServer_PRO_1.6.6/* /home/shsoserver/sf-notification || true
+ADD shso-server/* /home/shsoserver/
 RUN # cp -r ./shso-server/* .
-RUN sed -i 's,<UserName><!--DB Username here--></UserName>,<UserName>root</UserName>,g' sf-game/Server/config.xml
-RUN sed -i 's,<Password><!--DB Password here--></Password>,<Password>root</Password>,g' sf-game/Server/config.xml
-RUN sed -i 's,<UserName><!--DB Username here--></UserName>,<UserName>root</UserName>,g' sf-notification/Server/config.xml
-RUN sed -i 's,<Password><!--DB Password here--></Password>,<Password>root</Password>,g' sf-notification/Server/config.xml
+RUN sed -i 's,<UserName><!--DB Username here--></UserName>,<UserName>root</UserName>,g' /home/shsoserver/sf-game/Server/config.xml
+RUN sed -i 's,<Password><!--DB Password here--></Password>,<Password>root</Password>,g' /home/shsoserver/sf-game/Server/config.xml
+RUN sed -i 's,<UserName><!--DB Username here--></UserName>,<UserName>root</UserName>,g' /home/shsoserver/sf-notification/Server/config.xml
+RUN sed -i 's,<Password><!--DB Password here--></Password>,<Password>root</Password>,g' /home/shsoserver/sf-notification/Server/config.xml
 RUN cd /home/shsoserver/sf-game/Server/webserver/webapps/root/rasp/users
 RUN find . -type f -name "*.py" -print0 | xargs -0 sed -i "s,sys.path.append('sf-game/Server/webserver/webapps/root/pylibcsp'),sys.path.append('/home/shsoserver/sf-game/Server/webserver/webapps/root/pylibcsp'),g"
 RUN cd /home/shsoserver/sf-game/Server/webserver/webapps/root/rasp/data/json
