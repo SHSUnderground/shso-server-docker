@@ -16,11 +16,9 @@ RUN mkdir sf-game
 RUN mkdir sf-notification
 RUN tar -xf SFSPRO_linux64_1.6.6.tar.gz --strip-components=1 -C /home/shsoserver/sf-game
 RUN tar -xf SFSPRO_linux64_1.6.6.tar.gz --strip-components=1 -C /home/shsoserver/sf-notification
-# COPY ../shso-server/sf-game /home/shsoserver/sf-game
-# COPY ../shso-server/sf-notification /home/shsoserver/sf-notification
 RUN curl -L -o shso-server.zip https://github.com/SHSUnderground/shso-server/archive/refs/heads/master.zip
-RUN unzip -o shso-server.zip 'shso-server-master/sf-game/*' -d '/home/shsoserver/sf-game'
-RUN unzip -o shso-server.zip 'shso-server-master/sf-notification/*' -d '/home/shsoserver/sf-notification'
+RUN unzip shso-server.zip
+RUN cp -r /home/shsoserver/shso-server-master/* /home/shsoserver/
 RUN sed -i 's,<UserName><!--DB Username here--></UserName>,<UserName>root</UserName>,g' /home/shsoserver/sf-game/Server/config.xml
 RUN sed -i 's,<Password><!--DB Password here--></Password>,<Password>root</Password>,g' /home/shsoserver/sf-game/Server/config.xml
 RUN sed -i 's,<UserName><!--DB Username here--></UserName>,<UserName>root</UserName>,g' /home/shsoserver/sf-notification/Server/config.xml
