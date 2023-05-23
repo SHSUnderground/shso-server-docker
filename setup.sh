@@ -2,11 +2,11 @@ mkdir /home/shsoserver
 cd /home/shsoserver
 curl -L -o SFSPRO_linux64_1.6.6.tar.gz https://www.smartfoxserver.com/download/get/77
 tar -xf SFSPRO_linux64_1.6.6.tar.gz
-mkdir sf-game
-mkdir sf-notification
-cp -r SmartFoxServer_PRO_1.6.6/* /home/shsoserver/sf-game
-cp -r SmartFoxServer_PRO_1.6.6/* /home/shsoserver/sf-notification
-cp -r ./shso-server/* .
+# mkdir sf-game
+# mkdir sf-notification
+cp -n -r SmartFoxServer_PRO_1.6.6/* /home/shsoserver/sf-game || true
+cp -n -r SmartFoxServer_PRO_1.6.6/* /home/shsoserver/sf-notification || true
+# cp -r ./shso-server/* .
 sed -i 's,<UserName><!--DB Username here--></UserName>,<UserName>root</UserName>,g' sf-game/Server/config.xml
 sed -i 's,<Password><!--DB Password here--></Password>,<Password>root</Password>,g' sf-game/Server/config.xml
 sed -i 's,<UserName><!--DB Username here--></UserName>,<UserName>root</UserName>,g' sf-notification/Server/config.xml

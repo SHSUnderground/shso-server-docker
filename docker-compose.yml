@@ -1,6 +1,6 @@
 version: "3"
 services:
-    db:
+    shsodb:
         container_name: shsodb
         image: mysql:latest
         ports:
@@ -9,16 +9,17 @@ services:
             MYSQL_ROOT_PASSWORD: root
         volumes:
             - ./SHSO_sample_DB.sql:/docker-entrypoint-initdb.d/SHSO_sample_DB.sql
-    app:
+    shsoserver:
         container_name: shsoserver
         user: shsoserver
         links:
-            - "db"
+            - "shsodb"
         build: ./
         command: /bin/sh -c "/home/shsoserver/setup.sh"
         ports:
             - "9339:9339"
             - "9389:9389"
         volumes:
-            - ./shso-server:/home/shsoserver/shso-server
+            - ./shso-server/sf-game:/home/shsoserver/sf-game
+            - ./shso-server/sf-notification:/home/shsoserver/sf-notification
             - ./setup.sh:/home/shsoserver/setup.sh
