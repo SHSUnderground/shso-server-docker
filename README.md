@@ -8,7 +8,7 @@ git clone --recurse-submodules https://github.com/SHSUnderground/shso-server-doc
 cd shso-server-docker
 docker compose up
 ```
-## Shutdown:
+## Shutdown
 ```
 docker compose down
 ```
