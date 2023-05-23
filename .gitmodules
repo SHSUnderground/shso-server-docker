@@ -1,0 +1,3 @@
+[submodule "shso-server"]
+	path = shso-server
+	url = https://github.com/SHSUnderground/shso-server
