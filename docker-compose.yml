@@ -12,10 +12,10 @@ services:
     shsoserver:
         container_name: shsoserver
         image: ubuntu:latest
-        user: shsoserver
         links:
             - "shsodb"
         build: ./
+        working_dir: /home/shsoserver
         command: /bin/sh -c "/home/shsoserver/setup.sh"
         ports:
             - "9339:9339"
