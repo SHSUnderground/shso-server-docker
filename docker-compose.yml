@@ -13,7 +13,9 @@ services:
         container_name: shsoserver
         links:
             - "shsodb"
-        build: ./
+        build:
+            context: .
+            dockerfile: shsoserver/Dockerfile
         working_dir: /home/shsoserver
         ports:
             - "9339:9339"
