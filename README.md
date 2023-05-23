@@ -17,3 +17,6 @@ Open a terminal in the same directory `shso-server-docker` then run:
 ```
 docker compose up
 ```
+# Game
+- Log in with username: `User` and password: `password`.
+- Don't forget to edit the IP in the game's directory then `AssetBundles\Configuration\server.xml`
