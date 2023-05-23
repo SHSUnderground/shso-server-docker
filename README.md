@@ -13,7 +13,7 @@ docker compose up
 docker compose down
 ```
 # Starting it again
-Open a terminal in the same directory `shso-server-docker then run:
+Open a terminal in the same directory `shso-server-docker` then run:
 ```
 docker compose up
 ```
