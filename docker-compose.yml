@@ -16,7 +16,6 @@ services:
             - "shsodb"
         build: ./
         working_dir: /home/shsoserver
-        command: /bin/sh -c "/home/shsoserver/setup.sh"
         ports:
             - "9339:9339"
             - "9389:9389"
@@ -24,3 +23,5 @@ services:
             - ./shso-server/sf-game:/home/shsoserver/sf-game
             - ./shso-server/sf-notification:/home/shsoserver/sf-notification
             - ./setup.sh:/home/shsoserver/setup.sh
+        command: 
+            - setup.sh
