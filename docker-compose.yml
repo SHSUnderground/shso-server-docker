@@ -8,7 +8,7 @@ services:
         environment:
             MYSQL_ROOT_PASSWORD: root
         volumes:
-            - ./SHSO_sample_DB.sql:/docker-entrypoint-initdb.d/SHSO_sample_DB.sql
+            - ./shso-server/SHSO_sample_DB.sql:/docker-entrypoint-initdb.d/SHSO_sample_DB.sql
             - ./dbdata:/var/lib/mysql
     shsoserver:
         container_name: shsoserver
