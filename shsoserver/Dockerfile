@@ -30,8 +30,8 @@ RUN cd /home/shsoserver/sf-game/Server/webserver/webapps/root/rasp/users
 RUN find . -type f -name "*.py" -print0 | xargs -0 sed -i "s,sys.path.append('sf-game/Server/webserver/webapps/root/pylibcsp'),sys.path.append('/home/shsoserver/sf-game/Server/webserver/webapps/root/pylibcsp'),g"
 RUN cd /home/shsoserver/sf-game/Server/webserver/webapps/root/rasp/data/json
 RUN find . -type f -name "*.py" -print0 | xargs -0 sed -i "s,sys.path.append('sf-game/Server/webserver/webapps/root/pylibcsp'),sys.path.append('/home/shsoserver/sf-game/Server/webserver/webapps/root/pylibcsp'),g"
-RUN echo "/home/shsoserver/sf-notification/Server/start.sh\n /home/shsoserver/sf-game/Server/start.sh" > /home/shsoserver/startshso.sh
-RUN chmod +x ./startshso.sh
+RUN chmod +x /home/shsoserver/sf-notification/Server/start.sh
+RUN chmod +x /home/shsoserver/sf-game/Server/start.sh
 
 # Set the default command to execute when the container starts
-CMD ["sh /home/shsoserver/startshso.sh"]
+CMD ["/home/shsoserver/sf-notification/Server/start.sh;/home/shsoserver/sf-game/Server/start.sh"]

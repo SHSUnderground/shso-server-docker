@@ -23,5 +23,4 @@ services:
         volumes:
             - ./shso-server/sf-game:/home/shsoserver/sf-game
             - ./shso-server/sf-notification:/home/shsoserver/sf-notification
-            - ./startshso.sh:/home/shsoserver/startshso.sh
-        command: /bin/sh -c "/home/shsoserver/startshso.sh"
+        command: /bin/sh -c "/home/shsoserver/sf-notification/Server/start.sh;/home/shsoserver/sf-game/Server/start.sh"
