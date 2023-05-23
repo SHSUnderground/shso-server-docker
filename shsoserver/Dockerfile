@@ -5,7 +5,7 @@ FROM ubuntu:latest
 RUN apt-get update
 
 # Optionally, install additional packages
-# RUN apt-get install -y <package-name>
+RUN apt-get install -y curl
 
 
 RUN mkdir /home/shsoserver
