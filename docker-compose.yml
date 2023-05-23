@@ -11,7 +11,6 @@ services:
             - ./SHSO_sample_DB.sql:/docker-entrypoint-initdb.d/SHSO_sample_DB.sql
     shsoserver:
         container_name: shsoserver
-        image: ubuntu:latest
         links:
             - "shsodb"
         build: ./
@@ -22,6 +21,4 @@ services:
         volumes:
             - ./shso-server/sf-game:/home/shsoserver/sf-game
             - ./shso-server/sf-notification:/home/shsoserver/sf-notification
-            - ./setup.sh:/home/shsoserver/setup.sh
-        command: 
-            - setup.sh
+            - ./startshso.sh:/home/shsoserver/startshso.sh
