@@ -5,19 +5,23 @@ FROM ubuntu:latest
 RUN apt-get update
 
 # Optionally, install additional packages
-RUN apt-get install -y curl
+RUN apt-get install -y curl unzip
 
 
 RUN mkdir /home/shsoserver
-RUN cd /home/shsoserver
+WORKDIR /home/shsoserver
 RUN curl -L -o SFSPRO_linux64_1.6.6.tar.gz https://www.smartfoxserver.com/download/get/77
 RUN tar -xf SFSPRO_linux64_1.6.6.tar.gz
-RUN # mkdir sf-game
-RUN # mkdir sf-notification
-RUN cp -n -r SmartFoxServer_PRO_1.6.6/* /home/shsoserver/sf-game || true
-RUN cp -n -r SmartFoxServer_PRO_1.6.6/* /home/shsoserver/sf-notification || true
-ADD shso-server/* /home/shsoserver/
-RUN # cp -r ./shso-server/* .
+RUN mkdir sf-game
+RUN mkdir sf-notification
+RUN rm -rf /home/shsoserver/SmartFoxServer_PRO_1.6.6/
+RUN cp -n -r /home/shsoserver/SmartFoxServer_PRO_1.6.6/* /home/shsoserver/sf-game || true
+RUN cp -n -r /home/shsoserver/SmartFoxServer_PRO_1.6.6/* /home/shsoserver/sf-notification || true
+# COPY ../shso-server/sf-game /home/shsoserver/sf-game
+# COPY ../shso-server/sf-notification /home/shsoserver/sf-notification
+RUN curl -L -o shso-server.zip https://github.com/SHSUnderground/shso-server/archive/refs/heads/master.zip
+RUN unzip shso-server
+RUN cp -r /home/shsoserver/shso-server-master/* /home/shsoserver/
 RUN sed -i 's,<UserName><!--DB Username here--></UserName>,<UserName>root</UserName>,g' /home/shsoserver/sf-game/Server/config.xml
 RUN sed -i 's,<Password><!--DB Password here--></Password>,<Password>root</Password>,g' /home/shsoserver/sf-game/Server/config.xml
 RUN sed -i 's,<UserName><!--DB Username here--></UserName>,<UserName>root</UserName>,g' /home/shsoserver/sf-notification/Server/config.xml
@@ -26,8 +30,8 @@ RUN cd /home/shsoserver/sf-game/Server/webserver/webapps/root/rasp/users
 RUN find . -type f -name "*.py" -print0 | xargs -0 sed -i "s,sys.path.append('sf-game/Server/webserver/webapps/root/pylibcsp'),sys.path.append('/home/shsoserver/sf-game/Server/webserver/webapps/root/pylibcsp'),g"
 RUN cd /home/shsoserver/sf-game/Server/webserver/webapps/root/rasp/data/json
 RUN find . -type f -name "*.py" -print0 | xargs -0 sed -i "s,sys.path.append('sf-game/Server/webserver/webapps/root/pylibcsp'),sys.path.append('/home/shsoserver/sf-game/Server/webserver/webapps/root/pylibcsp'),g"
-RUN cd /home/shsoserver/
-RUN chmox +x startshso.sh
+RUN echo "/home/shsoserver/sf-notification/Server/start.sh\n /home/shsoserver/sf-game/Server/start.sh" > /home/shsoserver/startshso.sh
+RUN chmod +x ./startshso.sh
 
 # Set the default command to execute when the container starts
 CMD ["sh /home/shsoserver/startshso.sh"]

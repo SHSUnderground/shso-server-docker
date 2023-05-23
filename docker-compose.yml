@@ -13,8 +13,8 @@ services:
         container_name: shsoserver
         links:
             - "shsodb"
-        build:
-            context: .
+        build: 
+            context: ./
             dockerfile: shsoserver/Dockerfile
         working_dir: /home/shsoserver
         ports:
@@ -24,3 +24,4 @@ services:
             - ./shso-server/sf-game:/home/shsoserver/sf-game
             - ./shso-server/sf-notification:/home/shsoserver/sf-notification
             - ./startshso.sh:/home/shsoserver/startshso.sh
+        command: /bin/sh -c "/home/shsoserver/startshso.sh"
