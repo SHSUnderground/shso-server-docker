@@ -5,20 +5,17 @@ FROM ubuntu:latest
 RUN apt-get update
 
 # Optionally, install additional packages
-RUN apt-get install -y curl unzip
+RUN apt-get install -y curl openjdk-8-jre
 
 
 RUN mkdir /home/shsoserver
 WORKDIR /home/shsoserver
+VOLUME ./shsoserverdata/:/home/shsoserver
+ADD ./shso-server .
 RUN curl -L -o SFSPRO_linux64_1.6.6.tar.gz https://www.smartfoxserver.com/download/get/77
-RUN tar -xf SFSPRO_linux64_1.6.6.tar.gz
-RUN mkdir sf-game
-RUN mkdir sf-notification
-RUN tar -xf SFSPRO_linux64_1.6.6.tar.gz --strip-components=1 -C /home/shsoserver/sf-game
-RUN tar -xf SFSPRO_linux64_1.6.6.tar.gz --strip-components=1 -C /home/shsoserver/sf-notification
-RUN curl -L -o shso-server.zip https://github.com/SHSUnderground/shso-server/archive/refs/heads/master.zip
-RUN unzip shso-server.zip
-RUN cp -r /home/shsoserver/shso-server-master/* /home/shsoserver/
+RUN tar -xf SFSPRO_linux64_1.6.6.tar.gz --strip-components=1 -C /home/shsoserver/sf-game -k || true
+RUN tar -xf SFSPRO_linux64_1.6.6.tar.gz --strip-components=1 -C /home/shsoserver/sf-notification -k || true
+ADD ./shso-server/ /home/shsoserver 
 RUN sed -i 's,<UserName><!--DB Username here--></UserName>,<UserName>root</UserName>,g' /home/shsoserver/sf-game/Server/config.xml
 RUN sed -i 's,<Password><!--DB Password here--></Password>,<Password>root</Password>,g' /home/shsoserver/sf-game/Server/config.xml
 RUN sed -i 's,<UserName><!--DB Username here--></UserName>,<UserName>root</UserName>,g' /home/shsoserver/sf-notification/Server/config.xml
@@ -32,4 +29,4 @@ RUN chmod +x /home/shsoserver/sf-notification/Server/start.sh
 RUN chmod +x /home/shsoserver/sf-game/Server/start.sh
 
 # Set the default command to execute when the container starts
-CMD ["/home/shsoserver/sf-notification/Server/start.sh;/home/shsoserver/sf-game/Server/start.sh"]
+CMD ["cd /home/shsoserver/sf-notification/Server/;./start.sh;cd /home/shsoserver/sf-game/Server/; ./start.sh"]
