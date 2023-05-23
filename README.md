@@ -19,4 +19,4 @@ docker compose up
 ```
 # Game
 - Log in with username: `User` and password: `password`.
-- Don't forget to edit the IP in the game's directory then `AssetBundles\Configuration\server.xml`
+- Don't forget to edit the IP in the game directory's `AssetBundles\Configuration\server.xml`
