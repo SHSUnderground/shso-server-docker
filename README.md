@@ -31,6 +31,6 @@ Open a terminal in the same directory `shso-server-docker` then run:
 docker compose up
 ```
 # Game
-- Remember to download the public game build or build your private build.
+- Remember to download the public game build from the official server (linked above) or build your private build.
 - Edit the IP and set it to `127.0.0.1` in the game directory's `AssetBundles\Configuration\server.xml`.
 - Log in with username: `User` and password: `password`.
