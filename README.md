@@ -1,5 +1,12 @@
 # shso-server-docker
 A repo to easily create a private server to play SHSO using Docker and Docker Compose.
+# Contact
+## Support
+For any help with any in-game issues go to the official server below:  
+<a href="https://discord.gg/cVSYeVa2Gg"><img src="https://discordapp.com/api/guilds/735244842921099427/widget.png?style=banner3" alt="Support Server"></a>
+## Dev Discussion
+Go to `#development-only` in the community server below:  
+<a href="https://discord.gg/PH54Utcm5Y"><img src="https://discordapp.com/api/guilds/895805639979331635/widget.png?style=banner3" alt="Community Server"></a>
 # Installation
 ## Easy way:
 - Install [Docker Desktop](https://www.docker.com/products/docker-desktop/) and restart.
