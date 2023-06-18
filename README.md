@@ -7,7 +7,7 @@ Remember to download the public game build or build your private instance, then 
 ### Easy way:
 - Install [Docker Desktop](https://www.docker.com/products/docker-desktop/) and restart.
 - Download the repo (Code button -> Download ZIP) or from [here](https://github.com/SHSUnderground/shso-server-docker/archive/refs/heads/master.zip).
-- Extract it somewhere.
+- Extract it into a folder somewhere easily accessible.
 - Double click on `start.bat` whenever you want to start it, to close simply close the window.
 ### Proper way:
 Clone the repo, change into the newly created directory, and then set up via Docker Compose:
