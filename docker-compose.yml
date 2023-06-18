@@ -7,20 +7,58 @@ services:
             - "3306:3306"
         environment:
             MYSQL_ROOT_PASSWORD: root
+            MYSQL_AUTH_PLUGIN: mysql_native_password
         volumes:
             - ./shso-server/SHSO_sample_DB.sql:/docker-entrypoint-initdb.d/SHSO_sample_DB.sql
-            - ./dbdata:/var/lib/mysql
+            - shso_mysql_data:/var/lib/mysql
+        command: --default-authentication-plugin=mysql_native_password
     shsoserver:
         container_name: shsoserver
         links:
             - "shsodb"
         working_dir: /home/shsoserver
-        volumes:
-            - ./shsoserverdata/:/home/shsoadmin
         build: 
             context: ./
             dockerfile: shsoserver/Dockerfile
+        volumes:
+            - shso_server_game:/home/shsoserver/sf-game
+            - shso_server_notification:/home/shsoserver/sf-notification
+            - ./shso-server:/home/shsoserver/dev
+        depends_on:
+            - shsodb
+        environment:
+        - WAIT_HOSTS=shsodb:3306
+        - WAIT_HOSTS_TIMEOUT=300
+        - WAIT_SLEEP_INTERVAL=30
+        - WAIT_HOST_CONNECT_TIMEOUT=30
         ports:
             - "9339:9339"
             - "9389:9389"
-        command: /bin/sh -c "cd /home/shsoserver/sf-notification/Server/;./start.sh;cd /home/shsoserver/sf-game/Server/; ./start.sh"
+            - "80:80"
+            - "8080:8080"
+        # Always copy local script files to be able to edit the server scripts easily, basically reruns the commands in shsoserver/Dockerfile without re-downloading.
+        command: 
+            - /bin/sh
+            - -c
+            - |
+                cp -r /home/shsoserver/dev/sf-game /home/shsoserver 
+                cp -r /home/shsoserver/dev/sf-notification /home/shsoserver 
+                sed -i 's,<UserName><!--DB Username here--></UserName>,<UserName>root</UserName>,g' /home/shsoserver/sf-game/Server/config.xml 
+                sed -i 's,<Password><!--DB Password here--></Password>,<Password>root</Password>,g' /home/shsoserver/sf-game/Server/config.xml 
+                sed -i 's,<ConnectionString>jdbc:mysql://127.0.0.1:3306/shso?useSSL=false</ConnectionString>,<ConnectionString>jdbc:mysql://shsodb:3306/shso?useSSL=false</ConnectionString>,g' /home/shsoserver/sf-game/Server/config.xml 
+                sed -i 's,<UserName><!--DB Username here--></UserName>,<UserName>root</UserName>,g' /home/shsoserver/sf-notification/Server/config.xml 
+                sed -i 's,<Password><!--DB Password here--></Password>,<Password>root</Password>,g' /home/shsoserver/sf-notification/Server/config.xml 
+                sed -i 's,<ConnectionString>jdbc:mysql://127.0.0.1:3306/shso?useSSL=false</ConnectionString>,<ConnectionString>jdbc:mysql://shsodb:3306/shso?useSSL=false</ConnectionString>,g' /home/shsoserver/sf-notification/Server/config.xml 
+                cd /home/shsoserver/sf-game/Server/webserver/webapps/root/rasp/users 
+                find . -type f -name '*.py' -print0 | xargs -0 sed -i 's,sf-game/Server/webserver/webapps/root,/home/shsoserver/sf-game/Server/webserver/webapps/root,g' 
+                cd /home/shsoserver/sf-game/Server/webserver/webapps/root/rasp/data/json 
+                find . -type f -name '*.py' -print0 | xargs -0 sed -i 's,sf-game/Server/webserver/webapps/root,/home/shsoserver/sf-game/Server/webserver/webapps/root,g' 
+                cd /home/shsoserver 
+                chmod +x /home/shsoserver/sf-notification/Server/start.sh 
+                chmod +x /home/shsoserver/sf-game/Server/start.sh 
+                /wait 
+                /bin/bash -c "cd /home/shsoserver/sf-notification/Server/; ./start.sh & cd /home/shsoserver/sf-game/Server/; ./start.sh"
+volumes:
+    shso_mysql_data:
+    shso_server_game:
+    shso_server_notification:
