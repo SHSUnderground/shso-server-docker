@@ -12,6 +12,9 @@ Go to `#development-only` in the community server below:
 - Install [Docker Desktop](https://www.docker.com/products/docker-desktop/) and restart.
 - Download the repo (Code button -> Download ZIP) or from [here](https://github.com/SHSUnderground/shso-server-docker/archive/refs/heads/master.zip).
 - Extract it into a folder somewhere easily accessible.
+- Download download ZIP from this [SHSUnderground/shso-server](https://github.com/SHSUnderground/shso-server/archive/refs/heads/master.zip).
+- Extract `shso-server-master` into `shso-server-docker-master`.
+- Rename `shso-server-master` into `shso-server`.
 - Double click on `start`/`start.bat` whenever you want to start it, to close simply close the window.
 - To be able to delete the server files from Docker, double click on `unload`/`unload.bat` and then:
   -  Open Docker Desktop from the start menu.
