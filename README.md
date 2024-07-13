@@ -43,3 +43,4 @@ docker compose up
 - Remember to download the public game build from the official server (linked above) or build your private build.
 - Edit the IP and set it to `127.0.0.1` in the game directory's `AssetBundles\Configuration\server.xml`.
 - Log in with username: `User` and password: `password`.
+- For heroes at level 40, log in with username: `Super_User` and password: `password`.
