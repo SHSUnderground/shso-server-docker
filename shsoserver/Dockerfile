@@ -1,4 +1,3 @@
-# Use the official MySQL image
 FROM ubuntu:focal
 
 # Update the package lists in the Ubuntu image
