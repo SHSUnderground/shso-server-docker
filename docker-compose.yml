@@ -2,7 +2,7 @@ version: "3"
 services:
     shsodb:
         container_name: shsodb
-        image: mysql:latest
+        image: mysql:8
         ports:
             - "3306:3306"
         environment:
@@ -11,7 +11,7 @@ services:
         volumes:
             - ./shso-server/SHSO_sample_DB.sql:/docker-entrypoint-initdb.d/SHSO_sample_DB.sql
             - shso_mysql_data:/var/lib/mysql
-        command: --default-authentication-plugin=mysql_native_password
+        command: --mysql_native_password=ON
     shsoserver:
         container_name: shsoserver
         links:
